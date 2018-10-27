@@ -1,27 +1,13 @@
 
-# coding: utf-8
-
-# In[1]:
-
-
 from sklearn.externals import joblib
 from utils import *
 import numpy as np
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
-
-
-# In[2]:
-
-
 params = 'exampleCT.yaml'
 #print(params)
 extractor = featureextractor.RadiomicsFeaturesExtractor(params)
 stat = True
-
-
-# In[ ]:
-
 
 test_image = cv2.imread("example.ppm")
 shape = detectShape(test)
