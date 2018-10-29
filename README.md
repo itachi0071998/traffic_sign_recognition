@@ -6,3 +6,8 @@ Run main.py file to predict the test image.
 
 
 Requirements = pyradiomics, imutils, SimpleITK, opencv, sklearn.
+
+
+
+
+Dataset is provided here = https://drive.google.com/open?id=1cBUkxuqCycztT7GrRKs9RAb13X6PADo7
