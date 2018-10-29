@@ -171,4 +171,56 @@ def simple_calc(arr,mode = None):
         return "Nothing to calculate please add mode = 'mean' for calculating mean or mode = 'std' for calculating std in the function"
     
     
+    
+ def IdentifyShape(image):
+    #image=cv2.imread(path+extrapath+"/"+name)
+    grayScale = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    #image=laplace_of_gaussian(grayScale)
+    org=image.copy()
+    org1=image.copy()
+    #smax=''
+    sigma = 0.33
+    v = np.median(grayScale)
+    low = int(max(0, (1.0 - sigma) * v))
+    high = int(min(255, (1.0 + sigma) * v))
+
+    edged = cv2.Canny(grayScale, low, high)
+
+    # After finding edges we have to find contours
+    # Contour is a curve of points with no gaps in the curve
+    # It will help us to find location of shapes
+
+    # cv2.RETR_EXTERNAL is passed to find the outermost contours (because we want to outline the shapes)
+    # cv2.CHAIN_APPROX_SIMPLE is removing redundant points along a line
+    (_, cnts, _) = cv2.findContours(edged,
+                                    cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    h=(image.shape)[0]
+    w=(image.shape)[1]
+    amax=0
+    vmax=0
+    smax="unknown"
+    #loop over the contours
+
+    for c in cnts:
+        # compute the moment of contour
+        #M = cv2.moments(c)
+        area=cv2.contourArea(c)
+        shape = (detectShape(c))[0]
+        approx= (detectShape(c))[1]
+        #print(shape,area,len(approx))
+        #Skip small or non-convex objects
+        #if(abs(area)<100 or (not(cv2.isContourConvex(approx)))):
+         #   continue
+        #if not(cv2.isContourConvex(approx)):
+         #   continue
+        #else:
+        #print(shape,area,len(approx))
+        #smax="a"
+        print(area)
+        if area>amax and area>200 and area<(w*h):
+            amax=area
+            vmax=len(approx)
+            imax=c
+            smax=shape
+    return smax
    
