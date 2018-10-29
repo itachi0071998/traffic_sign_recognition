@@ -6,7 +6,7 @@ Run feature_extractor.py file to build features from the dataset.
 
 
 
-Run model.py file to get the models weights.
+Run svm_model.py file to get the models weights.
 
 
 
@@ -14,7 +14,13 @@ Run model.py file to get the models weights.
 
 
 
-Run main.py file to predict the test image.
+Run main.py file to predict the test image. The recognition is done by 3 different methods
+
+1: Using svm weights
+
+2: Using Template matching code is written in models.py file
+
+3: Using corelation method code is written in models.py file
 
 
 
