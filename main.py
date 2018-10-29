@@ -10,7 +10,8 @@ extractor = featureextractor.RadiomicsFeaturesExtractor(params)
 stat = True
 
 test_image = cv2.imread("example.ppm")
-shape = detectShape(test)
+
+shape = detectShape(test_image)
 
 # way 1 using svm model finidng traffic sign
 col_image_patch2 = image.copy()
