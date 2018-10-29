@@ -1,8 +1,3 @@
-
-# coding: utf-8
-
-# In[ ]:
-
 import imutils
 from radiomics import featureextractor
 import cv2
@@ -12,11 +7,9 @@ import SimpleITK as sitk
 import six
 import matplotlib.pyplot as plt
 import pandas as pd
-
-# In[ ]:
 path = "GTSRB/Final_Training/Images/"
 params = 'exampleCT.yaml'
-#print(params)
+
 extractor = featureextractor.RadiomicsFeaturesExtractor(params)
 
 def doCellFeatExtract(cell_image, mask_image, extractor,stat):
@@ -46,7 +39,6 @@ def doCellFeatExtract(cell_image, mask_image, extractor,stat):
     return (cellFeat,featName)
 
 
-# In[ ]:
 
 
 def feature_extractor(shape):
@@ -143,3 +135,49 @@ def detectShape(c,z1=10):
 
     # return the name of the shape
     return shape
+
+def suitable_index(lth, th, arr):
+    count = 0
+    index = []
+    for i in range(0, len(arr)):
+        if lth<= arr[i] <=th:
+            count += 1
+            index.append(i)
+    return index, count
+
+def stdev_calc(shape, temp):
+    arr = np.arange(798)
+    arr = np.reshape(arr, (1,798))
+    for f in shape:
+        final_dev = []
+        stdev = []
+        for i in range(0, len(temp)):
+            if temp[i,798] == f:
+                stdev.append(temp[i,:798])
+        dev = np.asarray(stdev)
+        for j in range(0,798):
+            s = statistics.stdev(dev[: , j])
+            final_dev.append(s)
+        d = np.asarray(final_dev)
+        d = np.reshape(d, (1,798))
+        arr = np.concatenate((arr, d), axis = 0)
+    stdv = arr[1:,:]
+    return stdv
+
+def simple_calc(arr,mode = None):
+    if mode == "mean":
+        mean_stdev = np.zeros((1,arr.shape[1]))
+        for i in range(0,arr.shape[0]):
+            mean_stdev = mean_stdev + arr[i]
+        return mean_stdev/len(arr)
+    elif mode == "std":
+        stdev_mean = []
+        for i in range(0,arr.shape[1]):
+            stdev_mean.append(statistics.stdev(arr[:, i]))
+        stdev_mean = np.reshape(stdev_mean, (1,arr.shape[1]))
+        return stdev_mean
+    else:
+        return "Nothing to calculate please add mode = 'mean' for calculating mean or mode = 'std' for calculating std in the function"
+    
+    
+   
