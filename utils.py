@@ -109,32 +109,23 @@ def mean_calc(shape, temp):
     return mean
 
 
-def detectShape(c,z1=10):
+def detectShape(c):
     shape = 'unknown'
     # calculate perimeter using
     peri = cv2.arcLength(c, True)
     # apply contour approximation and store the result in vertices
-    vertices = cv2.approxPolyDP(c, 0.01*z1 * peri, True)
+    approx = cv2.approxPolyDP(c, 0.04 * peri, True)
 
     # If the shape it triangle, it will have 3 vertices
-    if len(vertices) == 3:
+    if len(approx) in range(3,5):
         shape = 'triangle'
 
-    # if the shape has 4 vertices, it is either a square or
-    # a rectangle
-    #elif len(vertices) == 4:
-     #   shape = "rhombus"
-
-    # if the shape is a pentagon, it will have 5 vertices
-    #elif len(vertices) == 8:
-     #   shape = "octagon"
-
-    # otherwise, we assume the shape is a circle
-    else:
+    # the shape is a circle
+    else :
         shape = "circle"
 
     # return the name of the shape
-    return shape
+    return shape,approx
 
 def suitable_index(lth, th, arr):
     count = 0
