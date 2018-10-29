@@ -217,7 +217,7 @@ def simple_calc(arr,mode = None):
         #print(shape,area,len(approx))
         #smax="a"
         print(area)
-        if area>amax and area>200 and area<(w*h):
+        if area>amax and area>300 and area<(w*h):
             amax=area
             vmax=len(approx)
             imax=c
